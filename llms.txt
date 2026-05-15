@@ -1,0 +1,48 @@
+# intentfile
+
+> A tiny open format for giving AI agents a task, permissions, acceptance criteria, and proof-of-done.
+
+Use this file to discover the most important project context quickly.
+
+## Start here
+
+- README: ./README.md
+- Agent instructions: ./AGENTS.md
+- Agent onboarding: ./docs/AGENT_ONBOARDING.md
+- Copy-paste agent prompt: ./docs/COPY_PASTE_AGENT_PROMPT.md
+- Repo skill: ./skills/intentfile/SKILL.md
+
+## Specification
+
+- Human spec: ./spec/intentfile-v0.1.md
+- Intent schema: ./spec/intentfile.schema.json
+- Proof schema: ./spec/proof.schema.json
+
+## Examples
+
+- Feature intent: ./examples/password-reset.intent.yaml
+- Bugfix intent: ./examples/bugfix.intent.yaml
+- Dependency upgrade intent: ./examples/dependency-upgrade.intent.yaml
+- Research intent: ./examples/research.intent.yaml
+- Proof example: ./examples/proof/password-reset.proof.yaml
+
+## Implementation
+
+- Core package: ./packages/core/src/index.ts
+- Core schemas: ./packages/core/src/schemas.ts
+- Core tests: ./packages/core/test/core.test.ts
+- CLI: ./packages/cli/src/index.ts
+- Website: ./apps/site/index.html
+- Website styles: ./apps/site/styles.css
+
+## Verification
+
+Run these before handing back meaningful changes:
+
+```bash
+npm install
+npm audit
+npm test
+npm run typecheck
+npm run build
+```

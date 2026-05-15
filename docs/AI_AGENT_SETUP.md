@@ -1,5 +1,8 @@
 # AI agent setup guide
 
+This file remains as a compatibility entrypoint. The current full onboarding
+guide is [AGENT_ONBOARDING.md](./AGENT_ONBOARDING.md).
+
 This guide is for a fresh AI agent taking over the repository with no prior
 context.
 

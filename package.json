@@ -19,16 +19,8 @@
   },
   "devDependencies": {
     "@types/node": "^22.13.1",
-    "@types/react": "^19.0.8",
-    "@types/react-dom": "^19.0.3",
     "tsx": "^4.20.6",
     "typescript": "^6.0.3",
     "vitest": "^4.1.6"
-  },
-  "overrides": {
-    "next": {
-      "postcss": "8.5.14"
-    },
-    "postcss": "8.5.14"
   }
 }

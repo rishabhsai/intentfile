@@ -21,6 +21,7 @@
       <nav class="nav" aria-label="Primary navigation">
         <a class="editorial-link brand" href="/">intentfile</a>
         <div class="nav-links">
+          <a class="editorial-link" href="#install">install</a>
           <a class="editorial-link" href="#spec">spec</a>
           <a class="editorial-link" href="#cli">cli</a>
           <a class="editorial-link" href="#proof">proof</a>
@@ -45,6 +46,32 @@
             delegating work.
           </p>
         </div>
+      </section>
+
+      <section id="install" class="prompt-section" aria-labelledby="install-heading">
+        <div class="section-header">
+          <div>
+            <p class="eyebrow">copy this to your agent</p>
+            <h2 id="install-heading">Install the skill, verify the CLI, then work from intent.</h2>
+          </div>
+          <button class="copy-button" type="button" data-copy-prompt>copy prompt</button>
+        </div>
+        <pre id="agent-prompt" class="code-panel prompt-panel" tabindex="0"><code>Install and use intentfile in this workspace.
+
+Repository: https://github.com/rishabhsai/intentfile
+
+Tasks:
+1. Clone the repo if it is not already present, then run npm install, npm run build, npm test, npm run typecheck, and npm audit.
+2. Use the CLI through npm run intent -- from the repo. If global npm links are acceptable in this environment, run npm link -w packages/cli and verify intent --help.
+3. If Codex-style local skills are supported, install the repo skill by copying skills/intentfile to ${CODEX_HOME:-$HOME/.codex}/skills/intentfile. If local skills are not supported, read skills/intentfile/SKILL.md and follow it as your operating guide.
+4. Read AGENTS.md, docs/AGENT_ONBOARDING.md, spec/intentfile-v0.1.md, and examples/password-reset.intent.yaml.
+5. Create or update a .intent.yaml for the task I give you, validate it, render a brief for the target agent, and require a .proof.yaml before calling the work done.
+6. At the end, report the exact commands you ran, changed files, acceptance status, and any unresolved questions.</code></pre>
+        <p class="prompt-note">
+          This prompt works before npm publish: agents can run the CLI from the
+          cloned repo and install the repo-packaged skill locally when their
+          runtime supports skills.
+        </p>
       </section>
 
       <section class="split-section" aria-label="Intent preview">
@@ -169,5 +196,33 @@ tests_run:
         </p>
       </section>
     </main>
+    <script>
+      const copyButton = document.querySelector("[data-copy-prompt]");
+      const promptBlock = document.querySelector("#agent-prompt");
+
+      copyButton?.addEventListener("click", async () => {
+        const text = promptBlock?.innerText.trim();
+        if (!text) return;
+
+        try {
+          await navigator.clipboard.writeText(text);
+          copyButton.textContent = "copied";
+          window.setTimeout(() => {
+            copyButton.textContent = "copy prompt";
+          }, 1600);
+        } catch {
+          const range = document.createRange();
+          range.selectNodeContents(promptBlock);
+          const selection = window.getSelection();
+          selection?.removeAllRanges();
+          selection?.addRange(range);
+          const copied = document.execCommand?.("copy");
+          copyButton.textContent = copied ? "copied" : "selected";
+          window.setTimeout(() => {
+            copyButton.textContent = "copy prompt";
+          }, 1600);
+        }
+      });
+    </script>
   </body>
 </html>

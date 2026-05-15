@@ -7,6 +7,7 @@ portable task contract for AI agents.
 
 ```bash
 npm install
+npm audit
 npm test
 npm run typecheck
 npm run build
@@ -24,7 +25,17 @@ failure or document the exact reason in your final proof.
 - `spec`: human spec and JSON Schemas.
 - `examples`: valid intent and proof files.
 - `docs`: setup and roadmap notes for humans and agents.
+- `skills/intentfile`: repo-packaged Codex skill for agents that support local skills.
 - `demos`: short runnable or copyable demos.
+
+## Concepts
+
+- Intent file: `.intent.yaml` or `.intent.json`; the task contract.
+- Proof file: `.proof.yaml` or `.proof.json`; the completion receipt.
+- Acceptance item: one statement, command, file check, or HTTP check that defines done.
+- Brief: an agent-ready prompt rendered from an intent file.
+- Verification: conservative checks against schema, proof sections, acceptance status,
+  command evidence, and obvious path policy issues.
 
 ## Engineering rules
 
@@ -77,3 +88,11 @@ npm run build -w apps/site
 ```
 
 Then inspect the site locally if possible.
+
+When changing agent onboarding, also update:
+
+- `README.md`
+- `docs/AGENT_ONBOARDING.md`
+- `docs/COPY_PASTE_AGENT_PROMPT.md`
+- `skills/intentfile/SKILL.md`
+- `llms.txt`

@@ -63,6 +63,28 @@ intent validate checkout.intent.yaml
 intent brief checkout.intent.yaml --target codex
 ```
 
+## Copy-paste prompt for your agent
+
+Paste this into a coding agent when you want it to install intentfile, load the
+repo skill, verify the CLI, and start working from an `.intent.yaml` contract:
+
+```txt
+Install and use intentfile in this workspace.
+
+Repository: https://github.com/rishabhsai/intentfile
+
+Tasks:
+1. Clone the repo if it is not already present, then run npm install, npm run build, npm test, npm run typecheck, and npm audit.
+2. Use the CLI through npm run intent -- from the repo. If global npm links are acceptable in this environment, run npm link -w packages/cli and verify intent --help.
+3. If Codex-style local skills are supported, install the repo skill by copying skills/intentfile to ${CODEX_HOME:-$HOME/.codex}/skills/intentfile. If local skills are not supported, read skills/intentfile/SKILL.md and follow it as your operating guide.
+4. Read AGENTS.md, docs/AGENT_ONBOARDING.md, spec/intentfile-v0.1.md, and examples/password-reset.intent.yaml.
+5. Create or update a .intent.yaml for the task I give you, validate it, render a brief for the target agent, and require a .proof.yaml before calling the work done.
+6. At the end, report the exact commands you ran, changed files, acceptance status, and any unresolved questions.
+```
+
+For a slower, more explicit version of this workflow, see
+[docs/AGENT_ONBOARDING.md](./docs/AGENT_ONBOARDING.md).
+
 ## Repository layout
 
 ```txt
@@ -86,7 +108,11 @@ intentfile/
     site/
   docs/
     AI_AGENT_SETUP.md
+    AGENT_ONBOARDING.md
+    COPY_PASTE_AGENT_PROMPT.md
     ROADMAP.md
+  skills/
+    intentfile/
   demos/
     codex/
     github-action/
@@ -110,8 +136,10 @@ semantics without domain-specific tests.
 ## For AI agents
 
 Start with [AGENTS.md](./AGENTS.md), then follow
-[docs/AI_AGENT_SETUP.md](./docs/AI_AGENT_SETUP.md). The setup guide is written
-for fresh agents that need to clone, install, verify, and safely continue work.
+[docs/AGENT_ONBOARDING.md](./docs/AGENT_ONBOARDING.md). If your agent supports
+Codex-style local skills, install or read [skills/intentfile/SKILL.md](./skills/intentfile/SKILL.md).
+The docs are written for fresh agents that need to clone, install, verify, and
+safely continue work.
 
 ## Status
 
