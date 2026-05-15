@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://intentfile.dev/schemas/proof-v0.1.schema.json",
+  "title": "intent proof v0.1",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["proof", "intent_id", "status", "acceptance"],
+  "properties": {
+    "proof": { "const": "intentproof/v0.1" },
+    "intent_id": { "type": "string", "minLength": 1 },
+    "status": {
+      "type": "string",
+      "enum": ["completed", "partial", "blocked", "failed", "rejected"]
+    },
+    "completed_at": { "type": "string", "format": "date-time" },
+    "summary": { "type": "string" },
+    "acceptance": {
+      "type": "object",
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "type": "string",
+            "enum": ["pass", "fail", "partial", "not_checked", "not_applicable"]
+          },
+          {
+            "type": "object",
+            "additionalProperties": true,
+            "required": ["status"],
+            "properties": {
+              "status": {
+                "type": "string",
+                "enum": ["pass", "fail", "partial", "not_checked", "not_applicable"]
+              },
+              "notes": { "type": "string" },
+              "command": { "type": "string" }
+            }
+          }
+        ]
+      }
+    },
+    "tests_run": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": true,
+        "required": ["command", "status"],
+        "properties": {
+          "command": { "type": "string" },
+          "status": { "type": "string" }
+        }
+      }
+    },
+    "changed_files": { "type": "array", "items": { "type": "string" } },
+    "commands_run": { "type": "array", "items": { "type": "string" } },
+    "unresolved_questions": { "type": "array", "items": { "type": "string" } },
+    "risk_notes": { "type": "array", "items": { "type": "string" } },
+    "artifacts": { "type": "object", "additionalProperties": true }
+  }
+}

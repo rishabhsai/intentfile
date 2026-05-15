@@ -1,0 +1,35 @@
+intent: intentfile/v0.1
+id: intent_dependency_upgrade_demo
+title: Upgrade Next.js
+objective: >
+  Upgrade the app to the latest compatible Next.js release and keep existing
+  routes working.
+constraints:
+  allowed_paths:
+    - package.json
+    - package-lock.json
+    - apps/**
+    - docs/**
+  denied_paths:
+    - .env
+    - .env.*
+  allowed_tools:
+    - shell
+    - git
+    - browser
+  denied_tools:
+    - secrets.read
+acceptance:
+  - id: A1
+    statement: The app uses the upgraded Next.js version.
+  - id: A2
+    command: npm test
+    must_pass: true
+  - id: A3
+    command: npm run build
+    must_pass: true
+proof_required:
+  - changed_files
+  - tests_run
+  - acceptance_checklist
+  - risk_notes

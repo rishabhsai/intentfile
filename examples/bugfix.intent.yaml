@@ -1,0 +1,35 @@
+intent: intentfile/v0.1
+id: intent_bugfix_demo
+title: Fix checkout total rounding
+objective: >
+  Fix the checkout total so tax and discounts round consistently to cents.
+background: >
+  Users have reported one-cent differences between cart preview and final
+  payment totals.
+constraints:
+  allowed_paths:
+    - src/checkout/**
+    - tests/checkout/**
+    - docs/**
+  denied_paths:
+    - .env
+    - infra/production/**
+  allowed_tools:
+    - shell
+    - git
+  denied_tools:
+    - payment.charge
+    - secrets.read
+acceptance:
+  - id: A1
+    statement: Cart preview and final checkout totals match for discounted orders.
+  - id: A2
+    statement: Currency math rounds only at final display/payment boundaries.
+  - id: A3
+    command: npm test -- checkout
+    must_pass: true
+proof_required:
+  - changed_files
+  - tests_run
+  - acceptance_checklist
+  - unresolved_questions

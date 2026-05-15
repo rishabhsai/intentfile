@@ -1,0 +1,32 @@
+intent: intentfile/v0.1
+id: intent_research_demo
+title: Compare agent handoff formats
+objective: >
+  Research Markdown issues, AGENTS.md, A2A task payloads, and MCP prompts as
+  agent handoff formats, then summarize where intentfile should compose with
+  each one.
+constraints:
+  allowed_paths:
+    - docs/**
+    - research/**
+  denied_paths:
+    - .env
+    - .env.*
+  allowed_tools:
+    - shell
+    - browser
+  denied_tools:
+    - payment.charge
+    - email.send
+acceptance:
+  - id: A1
+    statement: The summary compares at least four handoff formats.
+  - id: A2
+    statement: The summary lists what intentfile should not replace.
+  - id: A3
+    file_exists: docs/handoff-formats.md
+proof_required:
+  - changed_files
+  - acceptance_checklist
+  - commands_run
+  - unresolved_questions

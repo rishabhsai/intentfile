@@ -1,0 +1,34 @@
+{
+  "name": "intentfile-repo",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A tiny open format for giving AI agents a task, permissions, acceptance criteria, and proof-of-done.",
+  "license": "MIT",
+  "type": "module",
+  "workspaces": [
+    "apps/site",
+    "packages/core",
+    "packages/cli"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces --if-present",
+    "dev:site": "npm run dev -w apps/site",
+    "intent": "tsx packages/cli/src/index.ts",
+    "test": "npm run test --workspaces --if-present",
+    "typecheck": "npm run build -w packages/core && npm run typecheck --workspaces --if-present"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.1",
+    "@types/react": "^19.0.8",
+    "@types/react-dom": "^19.0.3",
+    "tsx": "^4.20.6",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.6"
+  },
+  "overrides": {
+    "next": {
+      "postcss": "8.5.14"
+    },
+    "postcss": "8.5.14"
+  }
+}

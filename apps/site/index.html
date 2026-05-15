@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="A tiny open format for giving AI agents a task, permissions, acceptance criteria, and proof-of-done."
+    />
+    <meta property="og:title" content="intentfile" />
+    <meta
+      property="og:description"
+      content="A tiny open format for giving AI agents a task, permissions, acceptance criteria, and proof-of-done."
+    />
+    <meta property="og:type" content="website" />
+    <title>intentfile</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="nav" aria-label="Primary navigation">
+        <a class="editorial-link brand" href="/">intentfile</a>
+        <div class="nav-links">
+          <a class="editorial-link" href="#spec">spec</a>
+          <a class="editorial-link" href="#cli">cli</a>
+          <a class="editorial-link" href="#proof">proof</a>
+          <a class="editorial-link" href="https://github.com/rishabhsai/intentfile">github</a>
+        </div>
+      </nav>
+    </header>
+
+    <main class="page">
+      <section class="hero">
+        <p class="eyebrow">agent task contracts</p>
+        <h1>Stop giving agents vague prompts.</h1>
+        <div class="lede">
+          <p>
+            <code class="inline-code">intentfile</code> is a tiny open format for
+            giving AI agents a task, permissions, acceptance criteria, and
+            proof-of-done.
+          </p>
+          <p>
+            Markdown is good for describing work. HTML is good for presenting
+            work. <code class="inline-code">.intent.yaml</code> is good for
+            delegating work.
+          </p>
+        </div>
+      </section>
+
+      <section class="split-section" aria-label="Intent preview">
+        <div>
+          <h2>One file tells the agent what done means.</h2>
+          <ul class="plain-list">
+            <li>Objective is explicit.</li>
+            <li>Allowed and denied paths are visible.</li>
+            <li>Acceptance criteria are reviewable or machine-checkable.</li>
+            <li>Proof is required before the agent says done.</li>
+          </ul>
+        </div>
+        <pre class="code-panel" aria-label="Example intentfile"><code>intent: intentfile/v0.1
+id: intent_password_reset
+title: Add password reset flow
+
+objective: &gt;
+  Implement email-based password reset.
+
+acceptance:
+  - id: A1
+    statement: Users can request a reset link.
+  - id: A2
+    command: npm test
+    must_pass: true
+
+proof_required:
+  - changed_files
+  - tests_run
+  - acceptance_checklist</code></pre>
+      </section>
+
+      <hr class="rule" />
+
+      <section id="spec" class="text-section">
+        <h2>Spec.</h2>
+        <p>
+          v0.1 keeps the core small: objective, context, constraints, acceptance,
+          deliverables, and required proof. The schema is strict about the fields
+          that matter, while leaving room for tools to add metadata at the edges.
+        </p>
+        <p>
+          The verifier is conservative by design. It can check schemas, required
+          proof fields, command results, file existence, and obvious path
+          violations. It does not pretend to prove product correctness without
+          tests.
+        </p>
+        <p>
+          <a class="editorial-link" href="https://github.com/rishabhsai/intentfile/tree/main/spec">
+            read the spec
+          </a>
+        </p>
+      </section>
+
+      <hr class="rule" />
+
+      <section id="cli" class="text-section">
+        <h2>CLI.</h2>
+        <p>
+          The first implementation ships as a TypeScript npm workspace with a
+          core package and an <code class="inline-code">intent</code> binary.
+        </p>
+        <div class="command-list">
+          <code>intent init "Add password reset flow"</code>
+          <code>intent validate password-reset.intent.yaml</code>
+          <code>intent brief password-reset.intent.yaml --target codex</code>
+          <code>intent proof password-reset.intent.yaml --include-git</code>
+          <code>intent verify password-reset.intent.yaml password-reset.proof.yaml</code>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <section id="proof" class="split-section">
+        <div>
+          <h2>Proof.</h2>
+          <p>
+            Every completed intent should return a receipt: changed files,
+            commands run, acceptance status, unresolved questions, risk notes,
+            and links to commits or pull requests when available.
+          </p>
+          <p>
+            That proof can be checked in CI, attached to a pull request, or
+            passed to another agent.
+          </p>
+        </div>
+        <pre class="code-panel compact" aria-label="Example proof"><code>proof: intentproof/v0.1
+intent_id: intent_password_reset
+status: completed
+
+acceptance:
+  A1:
+    status: pass
+    notes: Added reset request flow.
+  A2:
+    status: pass
+    command: npm test
+
+tests_run:
+  - command: npm test
+    status: passed</code></pre>
+      </section>
+
+      <hr class="rule" />
+
+      <section class="text-section">
+        <h2>For agent builders.</h2>
+        <p>
+          Use <code class="inline-code">AGENTS.md</code> for standing repository
+          instructions, <code class="inline-code">llms.txt</code> for discoverable
+          context, and <code class="inline-code">.intent.yaml</code> for the
+          single task being delegated. The files are meant to compose, not
+          compete.
+        </p>
+        <p>
+          <a
+            class="editorial-link"
+            href="https://github.com/rishabhsai/intentfile/blob/main/docs/AI_AGENT_SETUP.md"
+          >
+            setup guide for AI agents
+          </a>
+        </p>
+      </section>
+    </main>
+  </body>
+</html>
