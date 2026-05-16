@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">intentfile social preview</title>
+  <desc id="desc">A simple editorial preview card for intentfile.run.</desc>
+  <rect width="1200" height="630" fill="#fbf8f1"/>
+  <rect x="1" y="1" width="1198" height="628" fill="none" stroke="#d8cdbd" stroke-width="2"/>
+
+  <text x="67" y="96" fill="#667085" font-family="Inter, Arial, sans-serif" font-size="29" font-weight="500" letter-spacing="0">INTENTFILE.RUN</text>
+  <text x="876" y="96" fill="#667085" font-family="Inter, Arial, sans-serif" font-size="29" font-weight="500" letter-spacing="0">OPEN SOURCE / 2026</text>
+
+  <text x="67" y="264" fill="#090b10" font-family="Inter, Arial, sans-serif" font-size="105" font-weight="400" letter-spacing="0">make /goal</text>
+  <text x="67" y="384" fill="#090b10" font-family="Inter, Arial, sans-serif" font-size="105" font-weight="400" letter-spacing="0">know done.</text>
+
+  <text x="67" y="462" fill="#2f3a4a" font-family="Inter, Arial, sans-serif" font-size="35" font-weight="400" letter-spacing="0">Tiny task contracts for AI agents:</text>
+  <text x="67" y="512" fill="#2f3a4a" font-family="Inter, Arial, sans-serif" font-size="35" font-weight="400" letter-spacing="0">objective, acceptance, constraints, and proof.</text>
+
+  <text x="67" y="557" fill="#4b5870" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="400" letter-spacing="0">Codex / CLI / proof of done</text>
+</svg>
