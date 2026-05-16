@@ -7,6 +7,7 @@
   "type": "module",
   "workspaces": [
     "apps/site",
+    "apps/video",
     "packages/core",
     "packages/cli"
   ],
@@ -14,6 +15,7 @@
     "build": "npm run build --workspaces --if-present",
     "dev:site": "npm run dev -w apps/site",
     "intent": "tsx packages/cli/src/index.ts",
+    "render:video": "npm run render -w apps/video",
     "test": "npm run test --workspaces --if-present",
     "typecheck": "npm run build -w packages/core && npm run typecheck --workspaces --if-present"
   },

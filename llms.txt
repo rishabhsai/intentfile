@@ -10,6 +10,7 @@ Use this file to discover the most important project context quickly.
 - Agent instructions: ./AGENTS.md
 - Agent onboarding: ./docs/AGENT_ONBOARDING.md
 - Codex goal workflow: ./docs/CODEX_GOAL.md
+- Video demo notes: ./docs/VIDEO_DEMO.md
 - Copy-paste agent prompt: ./docs/COPY_PASTE_AGENT_PROMPT.md
 - Repo skill: ./skills/intentfile/SKILL.md
 
@@ -36,6 +37,8 @@ Use this file to discover the most important project context quickly.
 - CLI: ./packages/cli/src/index.ts
 - Website: ./apps/site/index.html
 - Website styles: ./apps/site/styles.css
+- Video source: ./apps/video/src/IntentfileGoalVideo.tsx
+- Video output: ./demos/intentfile-goal-demo.mp4
 
 ## Verification
 

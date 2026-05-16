@@ -22,6 +22,7 @@ failure or document the exact reason in your final proof.
   and verifier logic.
 - `packages/cli`: command-line interface named `intent`.
 - `apps/site`: public website.
+- `apps/video`: Remotion source for the launch demo video.
 - `spec`: human spec and JSON Schemas.
 - `examples`: valid intent and proof files.
 - `docs`: setup and roadmap notes for humans and agents.
@@ -79,6 +80,12 @@ Verify proof:
 npm run intent -- verify examples/password-reset.intent.yaml examples/proof/password-reset.proof.yaml
 ```
 
+Render the demo video:
+
+```bash
+npm run render:video
+```
+
 ## Change expectations
 
 When changing schemas, also update:
@@ -95,6 +102,15 @@ npm run build -w apps/site
 ```
 
 Then inspect the site locally if possible.
+
+When changing the video demo, run:
+
+```bash
+npm run typecheck -w apps/video
+npm run render:video
+```
+
+Update `docs/VIDEO_DEMO.md` if the storyboard or render path changes.
 
 When changing agent onboarding, also update:
 

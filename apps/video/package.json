@@ -1,0 +1,21 @@
+{
+  "name": "@intentfile/video",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "render": "remotion render src/index.ts IntentfileGoal ../../demos/intentfile-goal-demo.mp4 --codec=h264 --overwrite",
+    "studio": "remotion studio src/index.ts --host=0.0.0.0",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@remotion/cli": "^4.0.462",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
+    "remotion": "^4.0.462"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3"
+  }
+}

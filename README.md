@@ -94,6 +94,21 @@ Then paste:
 
 See [docs/CODEX_GOAL.md](./docs/CODEX_GOAL.md) for the full workflow.
 
+## Demo video
+
+Watch the launch demo: [demos/intentfile-goal-demo.mp4](./demos/intentfile-goal-demo.mp4)
+
+![intentfile video poster](./demos/intentfile-goal-demo-poster.png)
+
+The editable Remotion source lives in `apps/video`. Re-render it with:
+
+```bash
+npm run render:video
+```
+
+See [docs/VIDEO_DEMO.md](./docs/VIDEO_DEMO.md) for the storyboard and editing
+notes.
+
 ## Copy-paste prompt for your agent
 
 Paste this into a coding agent when you want it to install intentfile, load the
@@ -139,17 +154,21 @@ intentfile/
     cli/
   apps/
     site/
+    video/
   docs/
     AI_AGENT_SETUP.md
     AGENT_ONBOARDING.md
     CODEX_GOAL.md
     COPY_PASTE_AGENT_PROMPT.md
     ROADMAP.md
+    VIDEO_DEMO.md
   skills/
     intentfile/
   demos/
     codex/
     github-action/
+    intentfile-goal-demo.mp4
+    intentfile-goal-demo-poster.png
 ```
 
 ## Current implementation
@@ -160,6 +179,7 @@ intentfile/
   `verify`, `convert`, and `from github`.
 - `apps/site`: simple editorial website using the same sparse rhythm as
   `new.rishabhsai.com`.
+- `apps/video`: Remotion source for the short Codex `/goal` launch video.
 - `.github/workflows/test.yml`: install, test, typecheck, and build.
 
 This is v0.1 groundwork. The verifier is conservative by design: it can check

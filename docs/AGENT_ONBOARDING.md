@@ -109,6 +109,14 @@ For landing page changes:
 - `apps/site/styles.css`
 - `docs/COPY_PASTE_AGENT_PROMPT.md`
 
+For video demo changes:
+
+- `apps/video/src/IntentfileGoalVideo.tsx`
+- `apps/video/package.json`
+- `docs/VIDEO_DEMO.md`
+- `demos/intentfile-goal-demo.mp4`
+- `demos/intentfile-goal-demo-poster.png`
+
 ## 6. Create an intent
 
 ```bash
