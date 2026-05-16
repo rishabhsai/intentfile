@@ -22,9 +22,9 @@ Scene flow:
 1. Codex `/goal` needs a definition of done.
 2. Vague prompts become intent contracts.
 3. `task.intent.yaml` defines objective, constraints, acceptance, and proof.
-4. `intent goal` renders the copyable Codex `/goal` command.
+4. The intent CLI gives agents commands for briefs, goals, and proof.
 5. The agent loop continues until proof exists.
-6. The closing frame points to the GitHub repo.
+6. The closing frame points to `intentfile.run`.
 
 ## Render
 

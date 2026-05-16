@@ -72,8 +72,8 @@ export const IntentfileGoalVideo = () => {
 const Header = () => {
   return (
     <div style={styles.header}>
-      <div style={styles.brand}>intentfile</div>
-      <div style={styles.headerMeta}>Codex /goal definition-of-done layer</div>
+      <div style={styles.brand}>intentfile.run</div>
+      <div style={styles.headerMeta}>agent CLI + Codex /goal definition-of-done layer</div>
     </div>
   );
 };
@@ -209,8 +209,8 @@ const GoalScene = () => {
     <div style={styles.goalScene}>
       <div style={styles.terminal}>
         <div style={styles.terminalTop}>
-          <span>intent CLI</span>
-          <span>render goal</span>
+          <span>intent CLI for agents</span>
+          <span>briefs, goals, proof</span>
         </div>
         <div style={styles.commandLine}>$ npm run intent -- goal task.intent.yaml --target codex</div>
         <div style={styles.goalOutput}>
@@ -220,8 +220,8 @@ const GoalScene = () => {
         </div>
       </div>
       <div style={styles.goalCaption}>
-        <Kicker>copy into codex</Kicker>
-        <h2 style={styles.sectionTitle}>A goal with a stopping condition.</h2>
+        <Kicker>cli agents can use</Kicker>
+        <h2 style={styles.sectionTitle}>Render goals, briefs, and proof from the terminal.</h2>
       </div>
     </div>
   );
@@ -261,7 +261,7 @@ const ClosingScene = () => {
         <br />
         intentfile defines done.
       </h2>
-      <div style={styles.url}>github.com/rishabhsai/intentfile</div>
+      <div style={styles.url}>Go to intentfile.run to get started.</div>
     </div>
   );
 };
