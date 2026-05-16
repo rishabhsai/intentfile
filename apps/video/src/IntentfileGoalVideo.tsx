@@ -25,6 +25,19 @@ const fontSans =
   "Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif";
 const fontMono = "SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace";
 
+export const intentfileGoalVideoFrames = 1080;
+
+const sceneTimeline = [
+  { label: "setup", start: 0, end: 198 },
+  { label: "problem", start: 180, end: 378 },
+  { label: "contract", start: 360, end: 558 },
+  { label: "goal", start: 540, end: 738 },
+  { label: "proof", start: 720, end: 918 },
+  { label: "close", start: 900, end: intentfileGoalVideoFrames }
+] as const;
+
+const slideStarts = sceneTimeline.map((scene) => scene.start);
+
 export const IntentfileGoalVideo = () => {
   const frame = useCurrentFrame();
 
@@ -32,22 +45,23 @@ export const IntentfileGoalVideo = () => {
     <AbsoluteFill style={styles.stage}>
       <Texture />
       <Header />
-      <SceneLayer start={0} end={250}>
+      <SlideCountdown frame={frame} />
+      <SceneLayer start={sceneTimeline[0].start} end={sceneTimeline[0].end}>
         <IntroScene />
       </SceneLayer>
-      <SceneLayer start={220} end={500}>
+      <SceneLayer start={sceneTimeline[1].start} end={sceneTimeline[1].end}>
         <ProblemScene />
       </SceneLayer>
-      <SceneLayer start={470} end={750}>
+      <SceneLayer start={sceneTimeline[2].start} end={sceneTimeline[2].end}>
         <ContractScene />
       </SceneLayer>
-      <SceneLayer start={720} end={990}>
+      <SceneLayer start={sceneTimeline[3].start} end={sceneTimeline[3].end}>
         <GoalScene />
       </SceneLayer>
-      <SceneLayer start={960} end={1230}>
+      <SceneLayer start={sceneTimeline[4].start} end={sceneTimeline[4].end}>
         <ProofScene />
       </SceneLayer>
-      <SceneLayer start={1190} end={1440}>
+      <SceneLayer start={sceneTimeline[5].start} end={sceneTimeline[5].end}>
         <ClosingScene />
       </SceneLayer>
       <Progress frame={frame} />
@@ -252,8 +266,38 @@ const ClosingScene = () => {
   );
 };
 
+const SlideCountdown = ({ frame }: { frame: number }) => {
+  const { fps } = useVideoConfig();
+  const sceneIndex = getCurrentSceneIndex(frame);
+  const currentStart = slideStarts[sceneIndex] ?? 0;
+  const nextStart = slideStarts[sceneIndex + 1] ?? intentfileGoalVideoFrames;
+  const duration = Math.max(1, nextStart - currentStart);
+  const elapsed = Math.max(0, frame - currentStart);
+  const remaining = interpolate(elapsed, [0, duration], [100, 0], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp"
+  });
+  const secondsLeft = Math.max(0, Math.ceil((nextStart - frame) / fps));
+  const label = sceneTimeline[sceneIndex]?.label ?? "slide";
+  const timerText = sceneIndex === sceneTimeline.length - 1
+    ? `ends in ${secondsLeft}s`
+    : `next slide in ${secondsLeft}s`;
+
+  return (
+    <div style={styles.slideTimer}>
+      <div style={styles.slideTimerMeta}>
+        <span>{label}</span>
+        <span>{timerText}</span>
+      </div>
+      <div style={styles.slideTimerTrack}>
+        <div style={{ ...styles.slideTimerFill, width: `${remaining}%` }} />
+      </div>
+    </div>
+  );
+};
+
 const Progress = ({ frame }: { frame: number }) => {
-  const width = interpolate(frame, [0, 1439], [0, 100], {
+  const width = interpolate(frame, [0, intentfileGoalVideoFrames - 1], [0, 100], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp"
   });
@@ -377,10 +421,17 @@ const ReceiptRow = ({ label, value }: { label: string; value: string }) => {
 };
 
 const sceneOpacity = (frame: number, start: number, end: number) =>
-  interpolate(frame, [start, start + 24, end - 24, end], [0, 1, 1, 0], {
+  interpolate(frame, [start, start + 18, end - 18, end], [0, 1, 1, 0], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp"
   });
+
+const getCurrentSceneIndex = (frame: number) => {
+  for (let index = slideStarts.length - 1; index >= 0; index -= 1) {
+    if (frame >= (slideStarts[index] ?? 0)) return index;
+  }
+  return 0;
+};
 
 const codeColor = (tone: "plain" | "green" | "blue" | "amber" | "rose") => {
   if (tone === "green") return "#b7dfb8";
@@ -420,8 +471,37 @@ const styles: Record<string, CSSProperties> = {
     fontFamily: fontMono,
     fontSize: 22
   },
+  slideTimer: {
+    position: "absolute",
+    top: 104,
+    left: 72,
+    right: 72,
+    zIndex: 24,
+    display: "grid",
+    gap: 9
+  },
+  slideTimerMeta: {
+    display: "flex",
+    justifyContent: "space-between",
+    color: colors.muted,
+    fontFamily: fontMono,
+    fontSize: 17,
+    letterSpacing: 0
+  },
+  slideTimerTrack: {
+    height: 7,
+    borderRadius: 999,
+    overflow: "hidden",
+    background: "rgba(9,11,16,0.1)",
+    border: "1px solid rgba(9,11,16,0.08)"
+  },
+  slideTimerFill: {
+    height: "100%",
+    borderRadius: 999,
+    background: colors.ink
+  },
   sceneLayer: {
-    padding: "150px 96px 92px"
+    padding: "162px 96px 92px"
   },
   twoColumn: {
     display: "grid",

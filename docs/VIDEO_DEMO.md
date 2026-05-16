@@ -6,7 +6,7 @@ The project includes a short Remotion demo video for launch posts.
 - Poster: `demos/intentfile-goal-demo-poster.png`
 - Source: `apps/video/src/IntentfileGoalVideo.tsx`
 - Composition id: `IntentfileGoal`
-- Format: 1920x1080, 30 fps, 48 seconds
+- Format: 1920x1080, 30 fps, 36 seconds
 
 ## Story
 
@@ -63,5 +63,5 @@ npm run render:video
 If the render output changes, regenerate the poster frame:
 
 ```bash
-ffmpeg -y -ss 00:00:34 -i demos/intentfile-goal-demo.mp4 -frames:v 1 demos/intentfile-goal-demo-poster.png
+ffmpeg -y -ss 00:00:25 -i demos/intentfile-goal-demo.mp4 -frames:v 1 demos/intentfile-goal-demo-poster.png
 ```
