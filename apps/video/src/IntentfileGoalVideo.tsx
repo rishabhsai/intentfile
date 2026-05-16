@@ -73,7 +73,7 @@ const Header = () => {
   return (
     <div style={styles.header}>
       <div style={styles.brand}>intentfile.run</div>
-      <div style={styles.headerMeta}>agent CLI + Codex /goal definition-of-done layer</div>
+      <div style={styles.headerMeta}>open-source agent CLI + Codex /goal definition-of-done layer</div>
     </div>
   );
 };
@@ -261,6 +261,7 @@ const ClosingScene = () => {
         <br />
         intentfile defines done.
       </h2>
+      <div style={styles.openSource}>Open source on GitHub: github.com/rishabhsai/intentfile</div>
       <div style={styles.url}>Go to intentfile.run to get started.</div>
     </div>
   );
@@ -800,6 +801,12 @@ const styles: Record<string, CSSProperties> = {
     color: colors.body,
     fontFamily: fontMono,
     fontSize: 30
+  },
+  openSource: {
+    marginTop: 38,
+    color: colors.body,
+    fontFamily: fontMono,
+    fontSize: 32
   },
   progressTrack: {
     position: "absolute",

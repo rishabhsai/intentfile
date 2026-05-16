@@ -24,7 +24,7 @@ Scene flow:
 3. `task.intent.yaml` defines objective, constraints, acceptance, and proof.
 4. The intent CLI gives agents commands for briefs, goals, and proof.
 5. The agent loop continues until proof exists.
-6. The closing frame points to `intentfile.run`.
+6. The closing frame says intentfile is open source and points to `intentfile.run`.
 
 ## Render
 
@@ -63,5 +63,5 @@ npm run render:video
 If the render output changes, regenerate the poster frame:
 
 ```bash
-ffmpeg -y -ss 00:00:25 -i demos/intentfile-goal-demo.mp4 -frames:v 1 demos/intentfile-goal-demo-poster.png
+ffmpeg -y -ss 00:00:33 -i demos/intentfile-goal-demo.mp4 -frames:v 1 demos/intentfile-goal-demo-poster.png
 ```
