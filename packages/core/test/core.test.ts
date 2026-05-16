@@ -4,6 +4,7 @@ import {
   parseIntent,
   parseProof,
   renderBrief,
+  renderGoal,
   validateIntent,
   verifyIntentProof
 } from "../src/index.js";
@@ -46,6 +47,27 @@ describe("intentfile core", () => {
     expect(brief).toContain("## Objective");
     expect(brief).toContain("A2: run `npm test` and pass");
     expect(brief).toContain("Codex Notes");
+  });
+
+  it("renders a Codex goal command and markdown goal", () => {
+    const intent = parseIntent(intentYaml);
+    const command = renderGoal(intent, {
+      target: "codex",
+      format: "command",
+      intentPath: "task.intent.yaml"
+    });
+    const markdown = renderGoal(intent, {
+      target: "codex",
+      format: "markdown",
+      intentPath: "task.intent.yaml",
+      proofPath: "task.proof.yaml"
+    });
+
+    expect(command).toContain("/goal Complete the intentfile task");
+    expect(command).toContain("definition of done");
+    expect(markdown).toContain("## Definition Of Done");
+    expect(markdown).toContain("A2: run `npm test` and pass");
+    expect(markdown).toContain("task.proof.yaml");
   });
 
   it("creates a proof skeleton from acceptance criteria", () => {

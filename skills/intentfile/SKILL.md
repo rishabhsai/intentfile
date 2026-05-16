@@ -1,6 +1,6 @@
 ---
 name: intentfile
-description: Work with intentfile agent task contracts and proof files. Use when creating, validating, rendering, converting, or verifying `.intent.yaml`, `.intent.json`, `.proof.yaml`, or `.proof.json` files; when installing or using the `intent` CLI; when turning a human task, GitHub issue, or agent handoff into machine-checkable acceptance criteria; or when requiring proof-of-done from an AI agent.
+description: Work with intentfile agent task contracts and proof files. Use when creating, validating, rendering, converting, or verifying `.intent.yaml`, `.intent.json`, `.proof.yaml`, or `.proof.json` files; when installing or using the `intent` CLI; when turning a human task, GitHub issue, Codex `/goal`, or agent handoff into machine-checkable acceptance criteria; or when requiring proof-of-done from an AI agent.
 ---
 
 # Intentfile
@@ -9,7 +9,9 @@ description: Work with intentfile agent task contracts and proof files. Use when
 
 Use intentfile to turn vague agent requests into portable task contracts. An
 intent file defines the objective, constraints, acceptance criteria, and proof
-required before an agent can call work done.
+required before an agent can call work done. For Codex `/goal`, use intentfile
+as the definition-of-done layer: `/goal` keeps Codex moving, intentfile defines
+done.
 
 ## First checks
 
@@ -44,8 +46,9 @@ intent --help
    and acceptance criteria.
 3. Validate the intent before delegating work.
 4. Render a brief for the target agent.
-5. Require a proof file or proof-shaped final answer when work completes.
-6. Verify proof against the intent and report errors, warnings, and residual risk.
+5. If the target is Codex `/goal`, render a goal command or goal document.
+6. Require a proof file or proof-shaped final answer when work completes.
+7. Verify proof against the intent and report errors, warnings, and residual risk.
 
 ## CLI tasks
 
@@ -66,6 +69,16 @@ Render a brief:
 ```bash
 npm run intent -- brief task.intent.yaml --target codex --out task.brief.md
 ```
+
+Render a Codex goal:
+
+```bash
+npm run intent -- goal task.intent.yaml --target codex
+npm run intent -- goal task.intent.yaml --target codex --format markdown --out task.goal.md
+```
+
+When using `/goal`, treat the intent's objective, constraints, acceptance, and
+proof_required fields as the stopping condition.
 
 Create proof:
 
@@ -88,6 +101,8 @@ npm run intent -- verify task.intent.yaml task.proof.yaml
 - Keep `proof_required` strong enough to audit the work later.
 - Treat `allowed_paths` and `denied_paths` as declared policy, not a sandbox.
 - Prefer warnings over false certainty when verification is advisory.
+- For `/goal` work, create or validate the intent before starting the durable
+  goal so the agent has an explicit stopping condition.
 
 ## Proof rules
 

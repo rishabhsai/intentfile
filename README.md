@@ -50,6 +50,7 @@ npm run build
 npm run intent -- init "Add password reset flow" --out task.intent.yaml
 npm run intent -- validate task.intent.yaml
 npm run intent -- brief task.intent.yaml --target codex
+npm run intent -- goal task.intent.yaml --target codex
 npm run intent -- proof task.intent.yaml --out task.proof.yaml
 npm run intent -- verify task.intent.yaml task.proof.yaml
 ```
@@ -61,7 +62,37 @@ from the built workspace.
 intent init "Fix checkout bug" --template bugfix --out checkout.intent.yaml
 intent validate checkout.intent.yaml
 intent brief checkout.intent.yaml --target codex
+intent goal checkout.intent.yaml --target codex
 ```
+
+## Codex `/goal`
+
+Codex `/goal` keeps Codex working toward a durable objective. `intentfile`
+defines what done means for that objective.
+
+```txt
+/goal keeps Codex moving. intentfile defines done.
+```
+
+Render a copyable goal command:
+
+```bash
+npm run intent -- goal task.intent.yaml --target codex
+```
+
+For longer tasks, render a goal document and point Codex at it:
+
+```bash
+npm run intent -- goal task.intent.yaml --target codex --format markdown --out task.goal.md
+```
+
+Then paste:
+
+```txt
+/goal follow the instructions in task.goal.md
+```
+
+See [docs/CODEX_GOAL.md](./docs/CODEX_GOAL.md) for the full workflow.
 
 ## Copy-paste prompt for your agent
 
@@ -77,9 +108,10 @@ Tasks:
 1. Clone the repo if it is not already present, then run npm install, npm run build, npm test, npm run typecheck, and npm audit.
 2. Use the CLI through npm run intent -- from the repo. If global npm links are acceptable in this environment, run npm link -w packages/cli and verify intent --help.
 3. If Codex-style local skills are supported, install the repo skill by copying skills/intentfile to ${CODEX_HOME:-$HOME/.codex}/skills/intentfile. If local skills are not supported, read skills/intentfile/SKILL.md and follow it as your operating guide.
-4. Read AGENTS.md, docs/AGENT_ONBOARDING.md, spec/intentfile-v0.1.md, and examples/password-reset.intent.yaml.
-5. Create or update a .intent.yaml for the task I give you, validate it, render a brief for the target agent, and require a .proof.yaml before calling the work done.
-6. At the end, report the exact commands you ran, changed files, acceptance status, and any unresolved questions.
+4. Read AGENTS.md, docs/AGENT_ONBOARDING.md, docs/CODEX_GOAL.md, spec/intentfile-v0.1.md, and examples/password-reset.intent.yaml.
+5. Create or update a .intent.yaml for the task I give you, validate it, render a brief for the target agent, and if Codex /goal is available render a goal with npm run intent -- goal task.intent.yaml --target codex.
+6. Treat the intent objective, constraints, acceptance, and proof_required as the definition of done. Require a .proof.yaml before calling the work done.
+7. At the end, report the exact commands you ran, changed files, acceptance status, and any unresolved questions.
 ```
 
 For a slower, more explicit version of this workflow, see
@@ -97,6 +129,7 @@ intentfile/
     proof.schema.json
   examples/
     password-reset.intent.yaml
+    codex-goal.intent.yaml
     dependency-upgrade.intent.yaml
     bugfix.intent.yaml
     research.intent.yaml
@@ -109,6 +142,7 @@ intentfile/
   docs/
     AI_AGENT_SETUP.md
     AGENT_ONBOARDING.md
+    CODEX_GOAL.md
     COPY_PASTE_AGENT_PROMPT.md
     ROADMAP.md
   skills/
@@ -122,8 +156,8 @@ intentfile/
 
 - `@intentfile/core`: TypeScript parser, schema validation, brief rendering,
   starter proof generation, and proof verification.
-- `@intentfile/cli`: `intent init`, `validate`, `brief`, `proof`, `verify`,
-  `convert`, and `from github`.
+- `@intentfile/cli`: `intent init`, `validate`, `brief`, `goal`, `proof`,
+  `verify`, `convert`, and `from github`.
 - `apps/site`: simple editorial website using the same sparse rhythm as
   `new.rishabhsai.com`.
 - `.github/workflows/test.yml`: install, test, typecheck, and build.

@@ -19,6 +19,12 @@
 - Convert intent files into agent-ready prompts.
 - Support generic, Codex, Claude Code, and Cursor targets.
 
+## Milestone 3.5: Codex goal bridge
+
+- Render Codex `/goal` commands from intent files.
+- Render longer goal documents for durable Codex runs.
+- Document the positioning: `/goal` keeps Codex moving, intentfile defines done.
+
 ## Milestone 4: Proof generator
 
 - Generate starter proof files.
@@ -49,4 +55,6 @@
 - GitHub App.
 - Web viewer for intent and proof files.
 - Permission enforcement proxy.
+- Optional goal metadata such as checkpoints, budgets, and stopping conditions
+  if real workflows need fields beyond current acceptance and proof sections.
 - `intent.lock` for pinned tools, models, and MCP servers.

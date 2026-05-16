@@ -6,10 +6,11 @@ format without overclaiming what verification can prove.
 
 ## 1. Mental model
 
-`intentfile` has three moving parts:
+`intentfile` has four moving parts:
 
 - Intent: `.intent.yaml` or `.intent.json`; the task contract.
 - Brief: a prompt rendered from the intent for a target agent.
+- Goal: a Codex `/goal` command or goal document rendered from the intent.
 - Proof: `.proof.yaml` or `.proof.json`; the receipt returned when work is done.
 
 An intent says what to do, what boundaries apply, what done means, and what
@@ -18,6 +19,12 @@ which commands ran, which files changed, and what remains unresolved.
 
 The verifier is conservative. It checks structure and evidence. It does not
 magically prove product correctness without project-specific tests.
+
+For Codex, use this positioning:
+
+```txt
+/goal keeps Codex moving. intentfile defines done.
+```
 
 ## 2. Install from GitHub
 
@@ -41,6 +48,7 @@ During early v0 development, the most reliable CLI path is the workspace script:
 npm run intent -- --help
 npm run intent -- validate examples/password-reset.intent.yaml
 npm run intent -- brief examples/password-reset.intent.yaml --target codex
+npm run intent -- goal examples/codex-goal.intent.yaml --target codex
 npm run intent -- proof examples/password-reset.intent.yaml --out /tmp/password-reset.proof.yaml
 npm run intent -- verify examples/password-reset.intent.yaml examples/proof/password-reset.proof.yaml
 ```
@@ -76,6 +84,7 @@ For ordinary implementation work:
 
 - `AGENTS.md`
 - `skills/intentfile/SKILL.md`
+- `docs/CODEX_GOAL.md`
 - `spec/intentfile-v0.1.md`
 - relevant examples under `examples/`
 
@@ -106,6 +115,7 @@ For landing page changes:
 npm run intent -- init "Add password reset flow" --template feature --out password-reset.intent.yaml
 npm run intent -- validate password-reset.intent.yaml
 npm run intent -- brief password-reset.intent.yaml --target codex --out password-reset.brief.md
+npm run intent -- goal password-reset.intent.yaml --target codex
 ```
 
 Before giving the brief to an agent, check that:
@@ -116,7 +126,30 @@ Before giving the brief to an agent, check that:
 - `proof_required` includes at least `changed_files`, `tests_run`, and
   `acceptance_checklist`.
 
-## 7. Complete with proof
+## 7. Use with Codex `/goal`
+
+For a short copyable command:
+
+```bash
+npm run intent -- goal password-reset.intent.yaml --target codex
+```
+
+For a longer durable goal document:
+
+```bash
+npm run intent -- goal password-reset.intent.yaml --target codex --format markdown --out password-reset.goal.md
+```
+
+Then start Codex with:
+
+```txt
+/goal follow the instructions in password-reset.goal.md
+```
+
+The intent remains the source of truth. The goal only tells Codex to persist
+until the intent's acceptance criteria and proof requirements are satisfied.
+
+## 8. Complete with proof
 
 ```bash
 npm run intent -- proof password-reset.intent.yaml --include-git --out password-reset.proof.yaml
@@ -133,7 +166,7 @@ A useful proof includes:
 - risk notes
 - commit or pull request links when available
 
-## 8. Validation language
+## 9. Validation language
 
 Use precise wording in final answers:
 
@@ -142,7 +175,7 @@ Use precise wording in final answers:
 - Good: "The verifier warned about a changed file outside allowed_paths."
 - Bad: "The verifier proved the feature works" unless domain tests actually did.
 
-## 9. Common failure modes
+## 10. Common failure modes
 
 - Missing proof section: add the required key to `.proof.yaml`.
 - Acceptance item missing proof: add an entry under `proof.acceptance`.
@@ -152,7 +185,7 @@ Use precise wording in final answers:
   before the work starts.
 - Invalid timestamp: use ISO 8601, for example `2026-05-15T12:00:00Z`.
 
-## 10. Final handoff format
+## 11. Final handoff format
 
 When handing work back, include:
 

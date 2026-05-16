@@ -146,6 +146,30 @@ h2 {
   margin-top: 56px;
 }
 
+.goal-section {
+  display: grid;
+  grid-template-columns: minmax(0, 0.72fr) minmax(320px, 1fr);
+  gap: 36px;
+  align-items: start;
+  margin-top: 56px;
+  padding: 34px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.goal-section > div:first-child {
+  display: grid;
+  gap: 12px;
+}
+
+.goal-copy {
+  display: grid;
+  gap: 18px;
+  color: var(--body);
+  font-size: 21px;
+  line-height: 1.62;
+}
+
 .section-header {
   display: flex;
   gap: 18px;
@@ -178,6 +202,10 @@ h2 {
 
 .prompt-panel {
   max-height: 430px;
+}
+
+.compact {
+  padding: 18px;
 }
 
 .prompt-note {
@@ -277,12 +305,14 @@ h2 {
 
   .lede,
   .text-section,
-  .split-section {
+  .split-section,
+  .goal-copy {
     font-size: 19px;
     line-height: 1.62;
   }
 
-  .split-section {
+  .split-section,
+  .goal-section {
     grid-template-columns: 1fr;
     gap: 28px;
   }

@@ -17,6 +17,7 @@ are:
 - `packages/core`: TypeScript implementation.
 - `packages/cli`: command-line wrapper.
 - `examples`: files that should stay valid.
+- `docs/CODEX_GOAL.md`: Codex `/goal` workflow.
 
 The key product rule: a completed task should produce proof. Do not let the CLI
 or docs imply that intentfile proves semantics it cannot actually prove.
@@ -42,6 +43,7 @@ If you only need to exercise the CLI during development:
 ```bash
 npm run intent -- validate examples/password-reset.intent.yaml
 npm run intent -- brief examples/password-reset.intent.yaml --target codex
+npm run intent -- goal examples/codex-goal.intent.yaml --target codex
 ```
 
 ## 3. Expected checks
@@ -80,7 +82,19 @@ Report any skipped check and why.
 3. Add help text that makes the command copyable.
 4. Update README quick start if the command is part of the common workflow.
 
-## 7. Proof language
+## 7. Codex goal language
+
+Use the precise positioning:
+
+```txt
+/goal keeps Codex moving. intentfile defines done.
+```
+
+When documenting Codex `/goal`, explain that `/goal` provides persistence and
+intentfile provides the stopping condition through acceptance criteria and
+proof requirements.
+
+## 8. Proof language
 
 Use honest wording:
 
@@ -89,7 +103,7 @@ Use honest wording:
 - Good: "re-ran command acceptance criteria"
 - Bad: "proved the feature works" unless domain-specific tests actually did
 
-## 8. Release notes template
+## 9. Release notes template
 
 ```md
 ## Summary

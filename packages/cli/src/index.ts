@@ -14,9 +14,11 @@ import {
   readIntentFile,
   readProofFile,
   renderBrief,
+  renderGoal,
   validateIntent,
   validateProof,
   verifyIntentProof,
+  type GoalRenderOptions,
   type IntentFile,
   type ProofFile
 } from "@intentfile/core";
@@ -61,6 +63,28 @@ program
   .action(async (file: string, options: { target: string; out?: string }) => {
     const intent = await readIntentFile(file);
     await writeOrPrint(renderBrief(intent, options.target), options.out);
+  });
+
+program
+  .command("goal")
+  .description("Render an intent into a Codex /goal command or durable goal document.")
+  .argument("<intent>", "intent file")
+  .option("--target <name>", "codex", "codex")
+  .option("--format <format>", "command or markdown", "command")
+  .option("--proof <file>", "expected proof file path")
+  .option("-o, --out <file>", "write output to a file")
+  .action(async (file: string, options: { target: string; format: string; proof?: string; out?: string }) => {
+    const intent = await readIntentFile(file);
+    const format = parseGoalFormat(options.format);
+    await writeOrPrint(
+      renderGoal(intent, {
+        target: options.target,
+        format,
+        intentPath: file,
+        proofPath: options.proof
+      }),
+      options.out
+    );
   });
 
 program
@@ -227,6 +251,11 @@ function convertAny(value: IntentFile | ProofFile, format: string): string {
     )}\n`;
   }
   throw new Error(`unsupported output format "${format}"`);
+}
+
+function parseGoalFormat(format: string): GoalRenderOptions["format"] {
+  if (format === "command" || format === "markdown") return format;
+  throw new Error(`unsupported goal format "${format}"; use command or markdown`);
 }
 
 function gitChangedFiles(): string[] {

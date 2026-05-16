@@ -1,0 +1,57 @@
+intent: intentfile/v0.1
+id: intent_codex_goal_positioning
+title: Position intentfile as the definition-of-done layer for Codex goal
+created_at: 2026-05-16T00:00:00Z
+objective: >
+  Update the project so Codex /goal can use an intentfile as the durable
+  definition of done for a long-running coding task.
+background: >
+  Codex /goal can keep an agent focused on a durable objective. An intentfile
+  makes that objective auditable by spelling out the acceptance criteria,
+  boundaries, and proof required before the task is complete.
+constraints:
+  allowed_paths:
+    - README.md
+    - AGENTS.md
+    - docs/**
+    - examples/**
+    - packages/**
+    - apps/site/**
+    - skills/intentfile/**
+    - llms.txt
+  denied_paths:
+    - .env
+    - .env.*
+    - infra/production/**
+  allowed_tools:
+    - shell
+    - git
+  denied_tools:
+    - payment.charge
+    - email.send
+    - secrets.read
+acceptance:
+  - id: A1
+    statement: The CLI can render a Codex /goal command from an intent file.
+  - id: A2
+    statement: Documentation explains that /goal keeps Codex running while intentfile defines done.
+  - id: A3
+    statement: The landing page includes copy that positions intentfile for Codex /goal users.
+  - id: A4
+    command: npm test
+    must_pass: true
+  - id: A5
+    command: npm run typecheck
+    must_pass: true
+  - id: A6
+    command: npm run build
+    must_pass: true
+proof_required:
+  - changed_files
+  - tests_run
+  - acceptance_checklist
+  - unresolved_questions
+metadata:
+  codex_goal_positioning:
+    tagline: "/goal keeps Codex moving. intentfile defines done."
+    goal_command: "npm run intent -- goal examples/codex-goal.intent.yaml --target codex"

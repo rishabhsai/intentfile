@@ -9,6 +9,7 @@ Use this file to discover the most important project context quickly.
 - README: ./README.md
 - Agent instructions: ./AGENTS.md
 - Agent onboarding: ./docs/AGENT_ONBOARDING.md
+- Codex goal workflow: ./docs/CODEX_GOAL.md
 - Copy-paste agent prompt: ./docs/COPY_PASTE_AGENT_PROMPT.md
 - Repo skill: ./skills/intentfile/SKILL.md
 
@@ -21,6 +22,7 @@ Use this file to discover the most important project context quickly.
 ## Examples
 
 - Feature intent: ./examples/password-reset.intent.yaml
+- Codex goal intent: ./examples/codex-goal.intent.yaml
 - Bugfix intent: ./examples/bugfix.intent.yaml
 - Dependency upgrade intent: ./examples/dependency-upgrade.intent.yaml
 - Research intent: ./examples/research.intent.yaml

@@ -22,6 +22,7 @@
         <a class="editorial-link brand" href="/">intentfile</a>
         <div class="nav-links">
           <a class="editorial-link" href="#install">install</a>
+          <a class="editorial-link" href="#goal">goal</a>
           <a class="editorial-link" href="#spec">spec</a>
           <a class="editorial-link" href="#cli">cli</a>
           <a class="editorial-link" href="#proof">proof</a>
@@ -33,18 +34,32 @@
     <main class="page">
       <section class="hero">
         <p class="eyebrow">agent task contracts</p>
-        <h1>Stop giving agents vague prompts.</h1>
+        <h1>Make Codex /goal know what done means.</h1>
         <div class="lede">
           <p>
-            <code class="inline-code">intentfile</code> is a tiny open format for
-            giving AI agents a task, permissions, acceptance criteria, and
-            proof-of-done.
+            <code class="inline-code">/goal</code> keeps Codex moving.
+            <code class="inline-code">intentfile</code> defines done.
           </p>
           <p>
-            Markdown is good for describing work. HTML is good for presenting
-            work. <code class="inline-code">.intent.yaml</code> is good for
-            delegating work.
+            Use a tiny <code class="inline-code">.intent.yaml</code> contract
+            to give agents the objective, boundaries, acceptance criteria, and
+            proof required before they can call a task complete.
           </p>
+        </div>
+      </section>
+
+      <section id="goal" class="goal-section" aria-labelledby="goal-heading">
+        <div>
+          <p class="eyebrow">codex goal bridge</p>
+          <h2 id="goal-heading">Persistence is not the same as completion.</h2>
+        </div>
+        <div class="goal-copy">
+          <p>
+            Codex <code class="inline-code">/goal</code> gives the agent a
+            durable objective. An intentfile gives that objective an auditable
+            stopping condition.
+          </p>
+          <pre class="code-panel compact"><code>npm run intent -- goal task.intent.yaml --target codex</code></pre>
         </div>
       </section>
 
@@ -64,9 +79,10 @@ Tasks:
 1. Clone the repo if it is not already present, then run npm install, npm run build, npm test, npm run typecheck, and npm audit.
 2. Use the CLI through npm run intent -- from the repo. If global npm links are acceptable in this environment, run npm link -w packages/cli and verify intent --help.
 3. If Codex-style local skills are supported, install the repo skill by copying skills/intentfile to ${CODEX_HOME:-$HOME/.codex}/skills/intentfile. If local skills are not supported, read skills/intentfile/SKILL.md and follow it as your operating guide.
-4. Read AGENTS.md, docs/AGENT_ONBOARDING.md, spec/intentfile-v0.1.md, and examples/password-reset.intent.yaml.
-5. Create or update a .intent.yaml for the task I give you, validate it, render a brief for the target agent, and require a .proof.yaml before calling the work done.
-6. At the end, report the exact commands you ran, changed files, acceptance status, and any unresolved questions.</code></pre>
+4. Read AGENTS.md, docs/AGENT_ONBOARDING.md, docs/CODEX_GOAL.md, spec/intentfile-v0.1.md, and examples/password-reset.intent.yaml.
+5. Create or update a .intent.yaml for the task I give you, validate it, render a brief for the target agent, and if Codex /goal is available render a goal with npm run intent -- goal task.intent.yaml --target codex.
+6. Treat the intent objective, constraints, acceptance, and proof_required as the definition of done. Require a .proof.yaml before calling the work done.
+7. At the end, report the exact commands you ran, changed files, acceptance status, and any unresolved questions.</code></pre>
         <p class="prompt-note">
           This prompt works before npm publish: agents can run the CLI from the
           cloned repo and install the repo-packaged skill locally when their
@@ -123,6 +139,10 @@ proof_required:
           <a class="editorial-link" href="https://github.com/rishabhsai/intentfile/tree/main/spec">
             read the spec
           </a>
+          <span aria-hidden="true"> · </span>
+          <a class="editorial-link" href="https://github.com/rishabhsai/intentfile/blob/main/docs/CODEX_GOAL.md">
+            codex goal workflow
+          </a>
         </p>
       </section>
 
@@ -138,6 +158,7 @@ proof_required:
           <code>intent init "Add password reset flow"</code>
           <code>intent validate password-reset.intent.yaml</code>
           <code>intent brief password-reset.intent.yaml --target codex</code>
+          <code>intent goal password-reset.intent.yaml --target codex</code>
           <code>intent proof password-reset.intent.yaml --include-git</code>
           <code>intent verify password-reset.intent.yaml password-reset.proof.yaml</code>
         </div>

@@ -175,3 +175,15 @@ The v0.1 verifier checks that:
 The verifier must be conservative. It can verify command results, file
 existence, schema validity, and obvious path violations. It cannot fully verify
 product correctness without domain-specific tests.
+
+## Renderers
+
+Tools may render an intent into target-specific prompts without changing the
+intent data model.
+
+- Brief renderer: creates an agent-ready prompt from the task contract.
+- Goal renderer: creates a Codex `/goal` command or goal document that uses the
+  intent acceptance criteria and proof requirements as the stopping condition.
+
+The renderer output is advisory glue. The intent file remains the source of
+truth for objective, constraints, acceptance, and proof.

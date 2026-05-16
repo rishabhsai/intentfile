@@ -1,4 +1,4 @@
 interface:
   display_name: "intentfile"
-  short_description: "Work with intentfile task contracts and proof files."
-  default_prompt: "Use intentfile to create, validate, render, and verify agent task contracts."
+  short_description: "Work with intentfile task contracts, Codex goals, and proof files."
+  default_prompt: "Use intentfile to create, validate, render Codex goal commands, and verify agent task contracts."

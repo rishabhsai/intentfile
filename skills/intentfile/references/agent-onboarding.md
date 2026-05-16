@@ -37,6 +37,7 @@ Prefer the workspace script until npm publication:
 
 ```bash
 npm run intent -- validate examples/password-reset.intent.yaml
+npm run intent -- goal examples/codex-goal.intent.yaml --target codex
 ```
 
 If global links are acceptable:
@@ -45,3 +46,14 @@ If global links are acceptable:
 npm link -w packages/cli
 intent validate examples/password-reset.intent.yaml
 ```
+
+## Codex goal
+
+Use this positioning when a user mentions Codex `/goal`:
+
+```txt
+/goal keeps Codex moving. intentfile defines done.
+```
+
+Render the goal from an intent file, then require proof before the goal is
+called complete.

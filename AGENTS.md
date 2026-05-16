@@ -34,6 +34,7 @@ failure or document the exact reason in your final proof.
 - Proof file: `.proof.yaml` or `.proof.json`; the completion receipt.
 - Acceptance item: one statement, command, file check, or HTTP check that defines done.
 - Brief: an agent-ready prompt rendered from an intent file.
+- Goal: a Codex `/goal` command or goal document rendered from an intent file.
 - Verification: conservative checks against schema, proof sections, acceptance status,
   command evidence, and obvious path policy issues.
 
@@ -58,6 +59,12 @@ Render an agent brief:
 
 ```bash
 npm run intent -- brief examples/password-reset.intent.yaml --target codex
+```
+
+Render a Codex goal:
+
+```bash
+npm run intent -- goal examples/codex-goal.intent.yaml --target codex
 ```
 
 Generate proof:
@@ -93,6 +100,7 @@ When changing agent onboarding, also update:
 
 - `README.md`
 - `docs/AGENT_ONBOARDING.md`
+- `docs/CODEX_GOAL.md`
 - `docs/COPY_PASTE_AGENT_PROMPT.md`
 - `skills/intentfile/SKILL.md`
 - `llms.txt`

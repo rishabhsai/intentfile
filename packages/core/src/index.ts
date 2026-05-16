@@ -91,6 +91,13 @@ export type VerificationResult = ValidationResult & {
   };
 };
 
+export type GoalRenderOptions = {
+  target?: string;
+  format?: "command" | "markdown";
+  intentPath?: string;
+  proofPath?: string;
+};
+
 const ajv = new Ajv2020({ allErrors: true, strict: false });
 const addFormats = (addFormatsModule.default ?? addFormatsModule) as unknown as (instance: Ajv2020) => void;
 addFormats(ajv);
@@ -313,6 +320,25 @@ export function renderBrief(intent: IntentFile, target = "generic"): string {
   return `${lines.join("\n")}\n`;
 }
 
+export function renderGoal(intent: IntentFile, options: GoalRenderOptions = {}): string {
+  const target = options.target ?? "codex";
+  const format = options.format ?? "command";
+
+  if (target !== "codex") {
+    throw new Error(`unsupported goal target "${target}"; supported target: codex`);
+  }
+
+  if (format === "command") {
+    return renderCodexGoalCommand(intent, options);
+  }
+
+  if (format === "markdown") {
+    return renderCodexGoalMarkdown(intent, options);
+  }
+
+  throw new Error(`unsupported goal format "${format}"; use command or markdown`);
+}
+
 export function verifyIntentProof(intent: IntentFile, proof: ProofFile): VerificationResult {
   const intentValidation = validateIntent(intent);
   const proofValidation = validateProof(proof);
@@ -392,6 +418,79 @@ export function describeAcceptance(item: AcceptanceItem): string {
     return `${method} ${item.http.url}${status}`;
   }
   return "unspecified acceptance";
+}
+
+function renderCodexGoalCommand(intent: IntentFile, options: GoalRenderOptions): string {
+  const source = options.intentPath ? ` in ${options.intentPath}` : ` with id ${intent.id}`;
+  return [
+    `/goal Complete the intentfile task "${intent.title}"${source}.`,
+    "Treat the intent objective, constraints, acceptance criteria, and proof_required as the definition of done.",
+    "Keep working until every acceptance item is proven in a proof file, or stop with unresolved_questions and blocker details."
+  ].join(" ") + "\n";
+}
+
+function renderCodexGoalMarkdown(intent: IntentFile, options: GoalRenderOptions): string {
+  const lines: string[] = [];
+  const source = options.intentPath ?? intent.id;
+  const proofPath = options.proofPath ?? defaultProofPath(options.intentPath);
+
+  lines.push(`# Codex Goal: ${intent.title}`);
+  lines.push("");
+  lines.push("Use this as the durable goal document for Codex `/goal`.");
+  lines.push("");
+  lines.push("```text");
+  lines.push("/goal follow the instructions in this goal file");
+  lines.push("```");
+  lines.push("");
+  lines.push("## Source Intent");
+  lines.push(`- Intent: \`${source}\``);
+  lines.push(`- Intent id: \`${intent.id}\``);
+  lines.push(`- Proof target: \`${proofPath}\``);
+  lines.push("");
+  lines.push("## Objective");
+  lines.push(intent.objective);
+
+  if (intent.background) {
+    lines.push("", "## Background", intent.background);
+  }
+
+  if (intent.constraints) {
+    lines.push("", "## Constraints", fencedYaml(intent.constraints));
+  }
+
+  lines.push("", "## Definition Of Done");
+  lines.push("- The objective above is satisfied.");
+  lines.push("- Every acceptance item below is pass, or explicitly not_applicable with notes.");
+  lines.push("- Required proof sections are present in the proof file or final proof-shaped response.");
+  lines.push("- Command acceptance criteria have passed command evidence when they can run in this workspace.");
+  lines.push("- Remaining blockers are reported under unresolved_questions instead of being hidden.");
+
+  lines.push("", "## Acceptance Criteria");
+  for (const item of intent.acceptance) {
+    lines.push(`- ${item.id}: ${describeAcceptance(item)}`);
+  }
+
+  lines.push("", "## Required Proof");
+  for (const requirement of intent.proof_required) {
+    lines.push(`- ${requirement}`);
+  }
+
+  lines.push("", "## Completion Procedure");
+  lines.push(`1. Open and follow the source intent \`${source}\`.`);
+  lines.push("2. Validate the intent before doing substantial work.");
+  lines.push("3. Make only changes allowed by the intent constraints.");
+  lines.push(`4. Produce proof at \`${proofPath}\` or include the same fields in the final response.`);
+  lines.push("5. Verify proof against the intent before calling the goal complete.");
+
+  return `${lines.join("\n")}\n`;
+}
+
+function defaultProofPath(intentPath?: string): string {
+  if (!intentPath) return "task.proof.yaml";
+  if (intentPath.endsWith(".intent.yaml")) return intentPath.replace(/\.intent\.yaml$/, ".proof.yaml");
+  if (intentPath.endsWith(".intent.yml")) return intentPath.replace(/\.intent\.yml$/, ".proof.yml");
+  if (intentPath.endsWith(".intent.json")) return intentPath.replace(/\.intent\.json$/, ".proof.json");
+  return "task.proof.yaml";
 }
 
 function parseStructured(content: string, source: string): unknown {
